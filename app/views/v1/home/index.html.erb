@@ -1,0 +1,535 @@
+<div class="mx-auto max-w-5xl px-6 py-10">
+  <header class="mb-10">
+    <p class="mb-2 text-sm uppercase tracking-[0.24em] text-slate-500">V1 / Form elements</p>
+    <h1 class="text-4xl font-semibold tracking-tight text-slate-900">Catalogue des composants</h1>
+    <p class="mt-3 max-w-2xl text-base leading-7 text-slate-600">Un use case par variation d'options, organisé par élément de formulaire.</p>
+  </header>
+
+  <%= form_with url: v1_results_path, method: :get, local: true do |form| %>
+
+    <%# ── 1. text_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">text_field</h2>
+        <p class="text-xs font-mono text-slate-400">placeholder · required · readonly</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid gap-5 sm:grid-cols-3">
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :text,
+            label: "Nom complet",
+            field_name: :full_name,
+            placeholder: "Jean Dupont"
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :text,
+            label: "Nom de l'entreprise",
+            field_name: :company_name,
+            placeholder: "Acme Corp",
+            required: true
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :text,
+            label: "Identifiant système",
+            field_name: :system_id,
+            placeholder: "USR-00123",
+            readonly: true
+          ) %>
+        </div>
+      </div>
+    </section>
+
+    <%# ── 2. email_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">email_field</h2>
+        <p class="text-xs font-mono text-slate-400">placeholder · required · readonly</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid gap-5 sm:grid-cols-3">
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :email,
+            label: "Email de contact",
+            field_name: :contact_email
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :email,
+            label: "Email principal",
+            field_name: :main_email,
+            required: true
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :email,
+            label: "Email vérifié",
+            field_name: :verified_email,
+            placeholder: "carlos@example.com",
+            readonly: true
+          ) %>
+        </div>
+      </div>
+    </section>
+
+    <%# ── 3. phone_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">phone_field</h2>
+        <p class="text-xs font-mono text-slate-400">placeholder · required · readonly</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid gap-5 sm:grid-cols-3">
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :phone,
+            label: "Numéro principal",
+            field_name: :phone_main
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :phone,
+            label: "Numéro d'urgence",
+            field_name: :phone_emergency,
+            required: true
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :phone,
+            label: "Numéro de bureau",
+            field_name: :phone_office,
+            placeholder: "+33 1 23 45 67 89",
+            readonly: true
+          ) %>
+        </div>
+      </div>
+    </section>
+
+    <%# ── 4. password_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">password_field</h2>
+        <p class="text-xs font-mono text-slate-400">placeholder · required · readonly · metadata[:toggle] · metadata[:timeout]</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :password,
+            label: "Mot de passe",
+            field_name: :password,
+            required: true
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :password,
+            label: "Confirmation (toggle: true, timeout: 2s)",
+            field_name: :password_confirm,
+            required: true,
+            metadata: { toggle: true, timeout: 2 }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :password,
+            label: "Code PIN (toggle: false)",
+            field_name: :pin,
+            placeholder: "••••",
+            metadata: { toggle: false }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :password,
+            label: "Clé API (readonly)",
+            field_name: :api_key,
+            placeholder: "sk-••••••••••••••••••••",
+            readonly: true
+          ) %>
+        </div>
+      </div>
+    </section>
+
+    <%# ── 5. select_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">select_field</h2>
+        <p class="text-xs font-mono text-slate-400">placeholder · required · readonly · metadata[:options] · metadata[:search]</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :select,
+            label: "Pays de résidence (search: true)",
+            field_name: :country,
+            placeholder: "Sélectionner un pays",
+            metadata: { options: @country_options, search: true }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :select,
+            label: "Profession (search: false)",
+            field_name: :occupation,
+            placeholder: "Sélectionner une profession",
+            metadata: { options: @occupation_options, search: false }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :select,
+            label: "Langue préférée (required)",
+            field_name: :language,
+            placeholder: "Choisir une langue",
+            required: true,
+            metadata: {
+              options: [["Français", "fr"], ["English", "en"], ["Español", "es"], ["Deutsch", "de"]],
+              search: false
+            }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :select,
+            label: "Rôle (readonly)",
+            field_name: :role,
+            placeholder: "Administrateur",
+            readonly: true,
+            metadata: {
+              options: [["Administrateur", "admin"], ["Éditeur", "editor"], ["Visiteur", "viewer"]],
+              search: false
+            }
+          ) %>
+        </div>
+      </div>
+    </section>
+
+    <%# ── 6. radio_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">radio_field</h2>
+        <p class="text-xs font-mono text-slate-400">required · metadata[:options] · metadata[:layout] (:horizontal / :vertical)</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-6">
+        <%= render V1::Form::Blocks::FieldComponent.new(
+          form: form,
+          field_type: :radio,
+          label: "Civilité (layout: horizontal)",
+          field_name: :civility,
+          metadata: {
+            options: [["Monsieur", "mr"], ["Madame", "mrs"], ["Non précisé", "other"]],
+            layout: :horizontal
+          }
+        ) %>
+        <%= render V1::Form::Blocks::FieldComponent.new(
+          form: form,
+          field_type: :radio,
+          label: "Type de compte (layout: vertical)",
+          field_name: :account_type,
+          metadata: {
+            options: [["Particulier", "personal"], ["Professionnel", "business"], ["Association", "nonprofit"]],
+            layout: :vertical
+          }
+        ) %>
+        <%= render V1::Form::Blocks::FieldComponent.new(
+          form: form,
+          field_type: :radio,
+          label: "Abonnement (required + horizontal)",
+          field_name: :plan,
+          required: true,
+          metadata: {
+            options: [["Gratuit", "free"], ["Pro", "pro"], ["Entreprise", "enterprise"]],
+            layout: :horizontal
+          }
+        ) %>
+      </div>
+    </section>
+
+    <%# ── 7. date_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">date_field</h2>
+        <p class="text-xs font-mono text-slate-400">required · metadata[:mode] (single / range) · metadata[:time] · metadata[:seconds]</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid gap-5 sm:grid-cols-3">
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :date,
+            label: "Date de naissance (single)",
+            field_name: :birth_date,
+            metadata: { mode: "single", time: false }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :date,
+            label: "Rendez-vous (single + time)",
+            field_name: :appointment,
+            metadata: { mode: "single", time: true }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :date,
+            label: "Horodatage (single + time + seconds)",
+            field_name: :precise_timestamp,
+            metadata: { mode: "single", time: true, seconds: true }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :date,
+            label: "Disponibilité (range)",
+            field_name: :availability,
+            metadata: { mode: "range", time: false }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :date,
+            label: "Plage horaire (range + time)",
+            field_name: :time_slot,
+            metadata: { mode: "range", time: true }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :date,
+            label: "Entrée en fonction (required)",
+            field_name: :start_date,
+            required: true,
+            metadata: { mode: "single", time: false }
+          ) %>
+        </div>
+      </div>
+    </section>
+
+    <%# ── 8. amount_input_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">amount_input_field</h2>
+        <p class="text-xs font-mono text-slate-400">placeholder · required · readonly · metadata[:currency] · metadata[:currency_position] · metadata[:hint]</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid gap-5 sm:grid-cols-3">
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :amount_input,
+            label: "Budget mensuel (currency_position: right)",
+            field_name: :monthly_budget,
+            placeholder: "0",
+            metadata: { currency: "€", currency_position: :right, hint: "Montant en euros" }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :amount_input,
+            label: "Salaire annuel (currency_position: left)",
+            field_name: :annual_salary,
+            placeholder: "0",
+            metadata: { currency: "$", currency_position: :left, hint: "Salaire brut annuel" }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :amount_input,
+            label: "Quantité (sans currency)",
+            field_name: :quantity,
+            placeholder: "0"
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :amount_input,
+            label: "Prix de vente (required)",
+            field_name: :sale_price,
+            placeholder: "0",
+            required: true,
+            metadata: { currency: "€", currency_position: :right, hint: "TVA incluse" }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :amount_input,
+            label: "Total calculé (readonly)",
+            field_name: :computed_total,
+            placeholder: "1 250",
+            readonly: true,
+            metadata: { currency: "€", currency_position: :right, hint: "Calculé automatiquement" }
+          ) %>
+        </div>
+      </div>
+    </section>
+
+    <%# ── 9. color_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">color_field</h2>
+        <p class="text-xs font-mono text-slate-400">placeholder · required · readonly</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid gap-5 sm:grid-cols-3">
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :color,
+            label: "Couleur de thème",
+            field_name: :theme_color,
+            placeholder: "Choisir votre couleur"
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :color,
+            label: "Couleur de la marque (required)",
+            field_name: :brand_color,
+            placeholder: "Couleur obligatoire",
+            required: true
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :color,
+            label: "Couleur système (readonly)",
+            field_name: :system_color,
+            placeholder: "#168249",
+            readonly: true
+          ) %>
+        </div>
+      </div>
+    </section>
+
+    <%# ── 10. file_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">file_field</h2>
+        <p class="text-xs font-mono text-slate-400">placeholder · required · metadata[:hint] · metadata[:accept] · metadata[:upload_text]</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-5">
+        <%= render V1::Form::Blocks::FieldComponent.new(
+          form: form,
+          field_type: :file,
+          label: "Photo de profil (accept: image/*)",
+          field_name: :avatar,
+          placeholder: "Importer une photo",
+          metadata: {
+            hint: "JPG, PNG ou GIF · max 5 Mo",
+            accept: "image/*",
+            upload_text: "Parcourir"
+          }
+        ) %>
+        <%= render V1::Form::Blocks::FieldComponent.new(
+          form: form,
+          field_type: :file,
+          label: "Curriculum Vitae (accept: PDF, required)",
+          field_name: :cv_file,
+          placeholder: "Importer votre CV",
+          required: true,
+          metadata: {
+            hint: "PDF uniquement · max 2 Mo",
+            accept: "application/pdf",
+            upload_text: "Choisir un PDF"
+          }
+        ) %>
+        <%= render V1::Form::Blocks::FieldComponent.new(
+          form: form,
+          field_type: :file,
+          label: "Pièce jointe (accept: tous types)",
+          field_name: :attachment,
+          placeholder: "Importer un fichier",
+          metadata: {
+            hint: "Tout type de fichier · max 10 Mo",
+            accept: "",
+            upload_text: "Choisir"
+          }
+        ) %>
+      </div>
+    </section>
+
+    <%# ── 11. textarea_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">textarea_field</h2>
+        <p class="text-xs font-mono text-slate-400">placeholder · required · readonly · metadata[:rows] · metadata[:hint]</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :textarea,
+            label: "Commentaire court (rows: 3)",
+            field_name: :short_comment,
+            placeholder: "Votre commentaire…",
+            metadata: { rows: 3 }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :textarea,
+            label: "Biographie (rows: 6 + hint)",
+            field_name: :biography,
+            placeholder: "Parlez-nous de vous…",
+            metadata: { rows: 6, hint: "Maximum 500 caractères" }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :textarea,
+            label: "Description du projet (required + hint)",
+            field_name: :project_description,
+            placeholder: "Décrivez votre projet en détail…",
+            required: true,
+            metadata: { rows: 4, hint: "Min. 100 caractères" }
+          ) %>
+          <%= render V1::Form::Blocks::FieldComponent.new(
+            form: form,
+            field_type: :textarea,
+            label: "Conditions générales (readonly)",
+            field_name: :terms_text,
+            placeholder: "Article 1 — En acceptant ces conditions…",
+            readonly: true,
+            metadata: { rows: 4 }
+          ) %>
+        </div>
+      </div>
+    </section>
+
+    <%# ── 12. checkbox_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">checkbox_field</h2>
+        <p class="text-xs font-mono text-slate-400">placeholder · required · metadata[:description] · metadata[:checked_value] · metadata[:unchecked_value]</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
+        <%= render V1::Form::Blocks::FieldComponent.new(
+          form: form,
+          field_type: :checkbox,
+          label: nil,
+          field_name: :marketing_emails,
+          placeholder: "Recevoir les actualités par email"
+        ) %>
+        <%= render V1::Form::Blocks::FieldComponent.new(
+          form: form,
+          field_type: :checkbox,
+          label: nil,
+          field_name: :terms,
+          placeholder: "J'accepte les conditions générales d'utilisation",
+          metadata: { description: "En cochant cette case, vous acceptez notre politique de confidentialité." }
+        ) %>
+        <%= render V1::Form::Blocks::FieldComponent.new(
+          form: form,
+          field_type: :checkbox,
+          label: nil,
+          field_name: :age_verified,
+          placeholder: "Je certifie avoir plus de 18 ans",
+          required: true,
+          metadata: { description: "Confirmation requise pour accéder au service." }
+        ) %>
+        <%= render V1::Form::Blocks::FieldComponent.new(
+          form: form,
+          field_type: :checkbox,
+          label: nil,
+          field_name: :notifications_enabled,
+          placeholder: "Activer les notifications push",
+          metadata: {
+            checked_value: "enabled",
+            unchecked_value: "disabled",
+            description: "checked_value: 'enabled' · unchecked_value: 'disabled'"
+          }
+        ) %>
+      </div>
+    </section>
+
+    <div class="flex justify-end">
+      <%= form.submit "Enregistrer le profil",
+            class: "inline-flex items-center justify-center rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-700" %>
+    </div>
+
+  <% end %>
+</div>

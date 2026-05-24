@@ -23,8 +23,19 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+
+    <%= render V1::Ui::SidebarComponent.new %>
+
+    <%# Flash messages — coin supérieur droit, hors du flux %>
+    <div class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none">
+      <% flash.each do |type, message| %>
+        <%= render V1::Ui::FlashComponent.new(type: type.to_sym, message: message) %>
+      <% end %>
+    </div>
+
+    <main id="dashboard-main" class="min-h-screen">
       <%= yield %>
     </main>
+
   </body>
 </html>
