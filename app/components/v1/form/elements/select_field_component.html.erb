@@ -1,0 +1,18 @@
+<div data-controller="slim-select">
+  <%= @form.select @field_name,
+      @options,
+      { selected: @value, include_blank: @placeholder },
+      {
+        class:    form_input,
+        required: @required,
+        data:     {
+          "slim-select-target": "select",
+          placeholder:          @placeholder,
+          search:               @metadata.fetch(:search, true)
+        }
+      } %>
+
+  <% if has_error? %>
+    <p class="<%= form_input_error_message %>"><%= error_message %></p>
+  <% end %>
+</div>

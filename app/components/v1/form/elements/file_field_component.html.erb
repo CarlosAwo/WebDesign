@@ -1,0 +1,48 @@
+<div data-controller="file-preview"
+     data-file-preview-initial-url-value="<%= @file_url %>"
+     data-file-preview-initial-name-value="<%= @file_name %>"
+     class="w-full bg-white shadow-sm border border-dashed border-neutral-300 rounded-[15px] p-4 hover:bg-neutral-100 transition m-4">
+
+  <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+
+    <!-- Preview -->
+    <div
+      data-file-preview-target="preview"
+      class="w-14 aspect-square rounded-xl bg-neutral-100 border border-neutral-200 flex items-center justify-center overflow-hidden mx-auto sm:mx-0 self-stretch">
+    </div>
+
+    <!-- Text -->
+    <div class="flex-1 text-center sm:text-left">
+      <div class="text-sm text-neutral-600 font-medium">
+        <%= @placeholder %>
+      </div>
+
+      <div class="text-xs text-neutral-400">
+        <%= @hint %>
+      </div>
+
+      <!-- filename -->
+      <div data-file-preview-target="filename"
+          class="text-xs text-neutral-500 mt-1 truncate">
+      </div>
+    </div>
+
+    <!-- Button -->
+    <button
+      type="button"
+      data-file-preview-target="button"
+      class="cursor-pointer w-full sm:w-auto text-sm text-primary-600 border border-primary-300 px-4 py-2 rounded-lg hover:bg-primary-50 transition font-medium"
+      onclick="this.nextElementSibling.click()">
+      <%= @upload_text %>
+    </button>
+
+    <%= form.file_field @field_name,
+      class: "hidden",
+      accept: @accept,
+      data: {
+        file_preview_target: "input",
+        action: "change->file-preview#preview"
+      } %>
+
+  </div>
+</div>

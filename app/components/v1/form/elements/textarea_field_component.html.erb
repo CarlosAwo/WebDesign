@@ -1,0 +1,13 @@
+<%= @form.text_area @field_name,
+    placeholder: @placeholder,
+    rows:        @rows,
+    required:    @required,
+    class:       "#{form_input} #{form_input_error if has_error?}" %>
+
+<% if @hint && !has_error? %>
+  <p class="<%= form_hint %>"><%= @hint %></p>
+<% end %>
+
+<% if has_error? %>
+  <p class="<%= form_input_error_message %>"><%= error_message %></p>
+<% end %>

@@ -1,0 +1,47 @@
+<div data-controller="flatpickr"
+     data-flatpickr-mode-value="<%= @mode %>"
+     data-flatpickr-time-value="<%= @enable_time %>"
+     data-flatpickr-seconds-value="<%= @enable_seconds %>"
+     class="relative">
+
+  <% if @mode == "range" %>
+    <div class="relative">
+      <input type="text"
+             placeholder="<%= range_placeholder %>"
+             autocomplete="off"
+             data-flatpickr-target="input"
+             class="<%= form_input %>">
+
+      <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-neutral-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/>
+        </svg>
+      </div>
+    </div>
+
+    <%= @form.hidden_field :"#{@field_name}_start", data: { "flatpickr-target": "start" } %>
+    <%= @form.hidden_field :"#{@field_name}_end",   data: { "flatpickr-target": "end" } %>
+
+  <% else %>
+    <div class="relative">
+      <%= @form.text_field @field_name,
+            value:       @value,
+            placeholder: @placeholder,
+            required:    @required,
+            data:        { "flatpickr-target": "input" },
+            class:       form_input %>
+
+      <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-neutral-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/>
+        </svg>
+      </div>
+    </div>
+  <% end %>
+
+  <% if has_error? %>
+    <p class="<%= form_input_error_message %>"><%= error_message %></p>
+  <% end %>
+</div>

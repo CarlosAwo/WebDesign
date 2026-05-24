@@ -1,0 +1,17 @@
+<div data-controller="phone-input">
+  <input type="text"
+         inputmode="numeric"
+         placeholder="<%= @placeholder %>"
+         value="<%= @value %>"
+         class="<%= form_input %> <%= form_input_error if has_error? %>"
+         data-phone-input-target="display"
+         data-action="input->phone-input#input keydown->phone-input#keydown"
+         autocomplete="tel"
+         <%= "required" if @required %>>
+
+  <%= @form.hidden_field @field_name, value: @value, data: { "phone-input-target": "hidden" } %>
+</div>
+
+<% if has_error? %>
+  <p class="<%= form_input_error_message %>"><%= error_message %></p>
+<% end %>

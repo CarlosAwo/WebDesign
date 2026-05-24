@@ -1,0 +1,24 @@
+<label class="inline-flex items-start gap-3 cursor-pointer select-none group">
+  <%= @form.check_box @field_name,
+        { required:        @required,
+          checked_value:   @checked_value,
+          unchecked_value: @unchecked_value,
+          class: "mt-0.5 h-4 w-4 rounded border-neutral-300 text-primary-600
+                  focus:ring-primary-500 focus:ring-offset-0 cursor-pointer
+                  #{form_input_error if has_error?}" },
+        @checked_value,
+        @unchecked_value %>
+
+  <span class="flex flex-col">
+    <% if @placeholder.present? %>
+      <span class="text-sm text-neutral-800"><%= @placeholder %></span>
+    <% end %>
+    <% if @description.present? %>
+      <span class="text-xs text-neutral-400 mt-0.5"><%= @description %></span>
+    <% end %>
+  </span>
+</label>
+
+<% if has_error? %>
+  <p class="<%= form_input_error_message %> mt-1"><%= error_message %></p>
+<% end %>

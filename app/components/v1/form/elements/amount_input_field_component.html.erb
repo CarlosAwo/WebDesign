@@ -1,0 +1,27 @@
+<div class="flex items-stretch" data-controller="amount-input">
+  <% if @currency && @currency_position.to_sym == :left %>
+    <span class="<%= form_input_addon_left %>"><%= @currency %></span>
+  <% end %>
+
+  <input type="text"
+         inputmode="decimal"
+         placeholder="<%= @placeholder || '0' %>"
+         class="<%= form_input %> <%= form_input_error if has_error? %>"
+         data-amount-input-target="display"
+         data-action="input->amount-input#input"
+         autocomplete="off">
+
+  <% if @currency && @currency_position.to_sym == :right %>
+    <span class="<%= form_input_addon_right %>"><%= @currency %></span>
+  <% end %>
+
+  <%= @form.hidden_field @field_name, value: @value, data: { "amount-input-target": "hidden" } %>
+</div>
+
+<% if @hint && !has_error? %>
+  <p class="<%= form_hint %>"><%= @hint %></p>
+<% end %>
+
+<% if has_error? %>
+  <p class="<%= form_input_error_message %>"><%= error_message %></p>
+<% end %>

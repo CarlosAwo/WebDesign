@@ -1,0 +1,11 @@
+
+<%= @form.email_field @field_name,
+      placeholder: @placeholder,
+      class:       "#{form_input} #{form_readonly if @readonly} #{form_input_error if has_error?}".strip,
+      value:       @value,
+      required:    @required,
+      readonly:    @readonly %>
+
+<% if has_error? %>
+  <p class="<%= form_input_error_message %>"><%= error_message %></p>
+<% end %>

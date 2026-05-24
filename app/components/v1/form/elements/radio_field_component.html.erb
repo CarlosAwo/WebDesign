@@ -1,0 +1,16 @@
+<div class="<%= @layout == :horizontal ? 'flex flex-wrap gap-x-6 gap-y-2' : 'flex flex-col gap-2' %>">
+  <% @options.each do |label, option_value| %>
+    <label class="inline-flex items-center gap-2.5 cursor-pointer select-none group">
+      <%= @form.radio_button @field_name, option_value,
+            required: @required,
+            checked:  @value.to_s == option_value.to_s,
+            class:    "h-4 w-4 border-neutral-300 text-primary-600
+                       focus:ring-primary-500 focus:ring-offset-0 cursor-pointer" %>
+      <span class="text-sm text-neutral-700 group-hover:text-neutral-900"><%= label %></span>
+    </label>
+  <% end %>
+</div>
+
+<% if has_error? %>
+  <p class="<%= form_input_error_message %> mt-1"><%= error_message %></p>
+<% end %>
