@@ -1,0 +1,8 @@
+<div data-controller="lightbox" data-lightbox-url-value="<%= @src %>">
+  <div data-lightbox-target="container" class="lightbox-wrapper overflow-hidden rounded-xl">
+    <img data-lightbox-target="image"
+         src="<%= @src %>"
+         alt="<%= @alt %>"
+         class="w-full h-full object-cover<%= " #{@img_class}" if @img_class %>" />
+  </div>
+</div>

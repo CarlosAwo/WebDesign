@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(bin/importmap pin *)"
+      "Bash(bin/importmap pin *)",
+      "Bash(mkdir -p /Users/carlos/Desktop/CODE/PROJETS/WebDesign/.vscode)"
+    ],
+    "additionalDirectories": [
+      "/Users/carlos/Desktop/CODE/PROJETS/WebDesign"
     ]
   }
 }
