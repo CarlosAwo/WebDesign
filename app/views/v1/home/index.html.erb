@@ -526,13 +526,101 @@
       </div>
     </section>
 
+    <%# ── 13. nested_field ── %>
+    <section class="mb-14">
+      <div class="mb-4">
+        <h2 class="text-lg font-semibold text-slate-900">nested_field</h2>
+        <p class="text-xs font-mono text-slate-400">metadata[:fields] · metadata[:add_label] · metadata[:remove_label] · metadata[:max]</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-6">
+
+        <%# ── Démo live : vrai composant avec Post.new + 2 comments pré-construits ── %>
+        <div>
+          <p class="mb-4 text-xs font-medium text-slate-400 uppercase tracking-widest">
+            has_many — Commentaires d'un article (max: 5 · auto-add si vide)
+          </p>
+
+          <% demo_post = Post.new %>
+          <% demo_post.comments.build(author: "Alice Martin",  content: "Excellent article, très clair !") %>
+          <% demo_post.comments.build(author: "Bob Durand",    content: "J'aurais aimé plus d'exemples.") %>
+
+          <%= form_with model: [:v1, demo_post], local: true do |demo_form| %>
+            <%= render V1::Form::Blocks::FieldComponent.new(
+              form:       demo_form,
+              field_type: :nested,
+              label:      "Commentaires",
+              field_name: :comments,
+              metadata: {
+                fields: {
+                  author:  { label: "Auteur",      type: :text,     placeholder: "Nom de l'auteur" },
+                  content: { label: "Commentaire", type: :textarea, placeholder: "Contenu du commentaire…",
+                             options: { rows: 2 } }
+                },
+                add_label:    "Ajouter un commentaire",
+                remove_label: "Supprimer",
+                max:          1
+              }
+            ) %>
+          <% end %>
+        </div>
+
+        <%# ── Code snippet ── %>
+        <div class="rounded-xl border border-slate-100 bg-slate-50 p-5">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">Usage</p>
+          <pre class="text-xs text-slate-600 leading-relaxed overflow-x-auto whitespace-pre"><code><%= raw(<<~'RUBY'
+# Modèle
+class Post < ApplicationRecord
+  has_many :comments, dependent: :destroy
+  accepts_nested_attributes_for :comments,
+    allow_destroy: true,
+    reject_if: :all_blank
+end
+
+# Vue
+render V1::Form::Blocks::FieldComponent.new(
+  form:       form,
+  field_type: :nested,
+  label:      "Commentaires",
+  field_name: :comments,           # → Comment.new via classify.constantize
+  metadata: {
+    fields: {
+      author:  { label: "Auteur",      type: :text,     placeholder: "Nom…" },
+      content: { label: "Commentaire", type: :textarea, placeholder: "Texte…",
+                 options: { rows: 2 } }
+    },
+    add_label:    "Ajouter un commentaire",
+    remove_label: "Supprimer",
+    max:          10               # 0 = illimité
+  }
+)
+
+# Controller strong params
+params.require(:post).permit(
+  :title,
+  comments_attributes: [:id, :author, :content, :_destroy]
+)
+RUBY
+) %></code></pre>
+        </div>
+
+        <%# ── Lien vers le CRUD complet ── %>
+        <div class="flex items-center justify-between rounded-lg border border-primary-100 bg-primary-50 px-4 py-3">
+          <p class="text-sm text-primary-800">
+            Démo CRUD complète avec <code class="font-mono text-xs">Post</code> + <code class="font-mono text-xs">Comment</code>
+          </p>
+          <%= link_to "Voir les Posts →", v1_posts_path, class: "text-sm font-medium text-primary-700 hover:text-primary-900 transition-colors" %>
+        </div>
+
+      </div>
+    </section>
+
     <div class="flex justify-end">
       <%= form.submit "Enregistrer le profil", class: "btn btn-primary btn-lg" %>
     </div>
 
   <% end %>
 
-  <%# ── 13. card_component ── %>
+  <%# ── 14. card_component ── %>
   <section class="mb-14">
     <div class="mb-4">
       <h2 class="text-lg font-semibold text-slate-900">card_component</h2>

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   namespace :v1 do
     root to: "home#index"
     get "results", to: "home#results", as: :results
+    resources :posts
   end
 
   root to: redirect("/v1")

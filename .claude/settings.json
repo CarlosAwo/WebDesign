@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(bin/importmap pin *)",
-      "Bash(mkdir -p /Users/carlos/Desktop/CODE/PROJETS/WebDesign/.vscode)"
+      "Bash(mkdir -p /Users/carlos/Desktop/CODE/PROJETS/WebDesign/.vscode)",
+      "Bash(bin/rails db:seed)",
+      "Bash(curl -s http://localhost:3001/v1/posts)",
+      "Bash(curl -s http://localhost:3001/v1/posts/new)",
+      "Bash(curl -s -X POST http://localhost:3001/v1/posts -H 'Content-Type: application/x-www-form-urlencoded' -H 'X-CSRF-Token: test' -d 'post[title]=Test+article&post[status]=draft&post[comments_attributes][0][author]=Jean&post[comments_attributes][0][content]=Super+article' -c /tmp/cookies.txt -b /tmp/cookies.txt -w '\\\\n%{http_code}')",
+      "Bash(curl -s http://localhost:3001/v1/posts/1/edit)",
+      "Bash(curl -s http://localhost:3001/v1/posts/1)"
     ],
     "additionalDirectories": [
       "/Users/carlos/Desktop/CODE/PROJETS/WebDesign"

@@ -1,0 +1,99 @@
+<%= form_with model: [:v1, post], local: true, class: "space-y-6" do |form| %>
+
+  <%# Erreurs globales %>
+  <% if post.errors.any? %>
+    <div class="rounded-lg border border-danger-200 bg-danger-50 px-4 py-3">
+      <p class="text-sm font-medium text-danger-700 mb-1">
+        <%= pluralize(post.errors.count, "erreur") %> ont empêché l'enregistrement :
+      </p>
+      <ul class="list-disc list-inside text-sm text-danger-600 space-y-0.5">
+        <% post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%# ── Informations de l'article ── %>
+  <div class="rounded-xl border border-neutral-200 bg-white p-6 space-y-5">
+    <h2 class="text-sm font-semibold text-neutral-700 border-b border-neutral-100 pb-3">
+      Informations de l'article
+    </h2>
+
+    <%= render V1::Form::Blocks::FieldComponent.new(
+      form: form,
+      field_type: :text,
+      label: "Titre",
+      field_name: :title,
+      placeholder: "Titre de l'article",
+      required: true
+    ) %>
+
+    <%= render V1::Form::Blocks::FieldComponent.new(
+      form: form,
+      field_type: :textarea,
+      label: "Description",
+      field_name: :description,
+      placeholder: "Résumé ou introduction de l'article…",
+      metadata: { rows: 3, hint: "Visible dans les aperçus et les résultats de recherche." }
+    ) %>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      <%= render V1::Form::Blocks::FieldComponent.new(
+        form: form,
+        field_type: :select,
+        label: "Statut",
+        field_name: :status,
+        placeholder: "Choisir un statut",
+        metadata: {
+          options: [["Brouillon", "draft"], ["Publié", "published"], ["Archivé", "archived"]],
+          search: false
+        }
+      ) %>
+
+      <%= render V1::Form::Blocks::FieldComponent.new(
+        form: form,
+        field_type: :date,
+        label: "Date de publication",
+        field_name: :published_at,
+        metadata: { mode: "single", time: true }
+      ) %>
+    </div>
+  </div>
+
+  <%# ── Commentaires (nested_field) ── %>
+  <div class="rounded-xl border border-neutral-200 bg-white p-6 space-y-4">
+    <div class="border-b border-neutral-100 pb-3">
+      <h2 class="text-sm font-semibold text-neutral-700">Commentaires</h2>
+      <p class="mt-0.5 text-xs text-neutral-400">
+        Les lignes vides ne sont pas enregistrées (<code class="font-mono">reject_if: :all_blank</code>).
+        Cliquez "Supprimer" pour marquer un commentaire existant à effacer.
+      </p>
+    </div>
+
+    <%= render V1::Form::Blocks::FieldComponent.new(
+      form: form,
+      field_type: :nested,
+      label: nil,
+      field_name: :comments,
+      metadata: {
+        fields: {
+          author:  { label: "Auteur",       type: :text,     placeholder: "Nom de l'auteur" },
+          content: { label: "Commentaire",  type: :textarea, placeholder: "Contenu du commentaire…",
+                     options: { rows: 2 } }
+        },
+        add_label:    "Ajouter un commentaire",
+        remove_label: "Supprimer",
+        max:          10
+      }
+    ) %>
+  </div>
+
+  <%# ── Actions ── %>
+  <div class="flex items-center justify-between">
+    <%= link_to "Annuler", v1_posts_path, class: "btn btn-outline" %>
+    <%= form.submit post.persisted? ? "Mettre à jour" : "Créer l'article",
+                    class: "btn btn-primary" %>
+  </div>
+
+<% end %>

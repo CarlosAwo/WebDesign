@@ -1,0 +1,74 @@
+<div class="mx-auto max-w-5xl px-6 py-10">
+
+  <div class="mb-8 flex items-center justify-between">
+    <div>
+      <p class="mb-1 text-sm uppercase tracking-[0.24em] text-slate-500">V1 / Posts</p>
+      <h1 class="text-3xl font-semibold tracking-tight text-slate-900">Articles</h1>
+    </div>
+    <%= link_to "Nouvel article", new_v1_post_path, class: "btn btn-primary" %>
+  </div>
+
+  <% if @posts.empty? %>
+    <div class="rounded-2xl border border-dashed border-slate-300 bg-white px-8 py-16 text-center">
+      <p class="text-sm text-slate-500 mb-4">Aucun article pour le moment.</p>
+      <%= link_to "Créer le premier article", new_v1_post_path, class: "btn btn-outline" %>
+    </div>
+  <% else %>
+    <div class="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-slate-100 bg-slate-50">
+            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">Titre</th>
+            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">Statut</th>
+            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">Commentaires</th>
+            <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">Publié le</th>
+            <th class="px-5 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <% @posts.each do |post| %>
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-5 py-4">
+                <p class="font-medium text-slate-900 truncate max-w-xs"><%= post.title %></p>
+                <% if post.description.present? %>
+                  <p class="text-xs text-slate-400 truncate max-w-xs mt-0.5"><%= post.description %></p>
+                <% end %>
+              </td>
+              <td class="px-5 py-4">
+                <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+                  <%= case post.status
+                      when 'published' then 'bg-primary-50 text-primary-700'
+                      when 'draft'     then 'bg-amber-50 text-amber-700'
+                      else                  'bg-neutral-100 text-neutral-500'
+                      end %>">
+                  <%= post.status&.humanize || "—" %>
+                </span>
+              </td>
+              <td class="px-5 py-4">
+                <span class="inline-flex items-center gap-1.5 text-slate-500">
+                  <svg class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.862 9.862 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                  </svg>
+                  <%= post.comments.size %>
+                </span>
+              </td>
+              <td class="px-5 py-4 text-slate-500">
+                <%= post.published_at&.strftime("%d %b %Y") || "—" %>
+              </td>
+              <td class="px-5 py-4 text-right">
+                <div class="flex items-center justify-end gap-2">
+                  <%= link_to "Voir", v1_post_path(post), class: "btn btn-ghost btn-sm" %>
+                  <%= link_to "Modifier", edit_v1_post_path(post), class: "btn btn-outline btn-sm" %>
+                  <%= button_to "Supprimer", v1_post_path(post), method: :delete,
+                                data: { turbo_confirm: "Supprimer cet article ?" },
+                                class: "btn btn-ghost btn-sm text-danger-600 hover:bg-danger-50" %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+</div>
