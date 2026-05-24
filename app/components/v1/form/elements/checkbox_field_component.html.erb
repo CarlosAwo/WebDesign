@@ -3,9 +3,7 @@
         { required:        @required,
           checked_value:   @checked_value,
           unchecked_value: @unchecked_value,
-          class: "mt-0.5 h-4 w-4 rounded border-neutral-300 text-primary-600
-                  focus:ring-primary-500 focus:ring-offset-0 cursor-pointer
-                  #{form_input_error if has_error?}" },
+          class: "form-checkbox mt-0.5 #{form_input_error if has_error?}" },
         @checked_value,
         @unchecked_value %>
 

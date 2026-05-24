@@ -527,9 +527,276 @@
     </section>
 
     <div class="flex justify-end">
-      <%= form.submit "Enregistrer le profil",
-            class: "inline-flex items-center justify-center rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary-700" %>
+      <%= form.submit "Enregistrer le profil", class: "btn btn-primary btn-lg" %>
     </div>
 
   <% end %>
+
+  <%# ── 13. card_component ── %>
+  <section class="mb-14">
+    <div class="mb-4">
+      <h2 class="text-lg font-semibold text-slate-900">card_component</h2>
+      <p class="text-xs font-mono text-slate-400">image_src · title · href · date · description · content slot</p>
+    </div>
+    <div class="grid gap-6 sm:grid-cols-3">
+
+      <%= render V1::Ui::CardComponent.new(
+        image_src:   "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=800",
+        image_alt:   "Interior design",
+        date:        "10th Oct 2022",
+        datetime:    "2022-10-10",
+        title:       "How to position your furniture for positivity",
+        href:        "#",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Recusandae dolores, possimus pariatur animi temporibus nesciunt praesentium dolore sed nulla ipsum eveniet corporis quidem, mollitia itaque minus soluta."
+      ) %>
+
+      <%= render V1::Ui::CardComponent.new(
+        image_src:   "https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&q=80&w=800",
+        image_alt:   "City at night",
+        date:        "3rd Mar 2023",
+        datetime:    "2023-03-03",
+        title:       "The art of minimalist living in urban spaces",
+        href:        "#",
+        description: "Pariatur animi temporibus nesciunt praesentium dolore sed nulla ipsum eveniet corporis quidem, mollitia itaque minus soluta, voluptates neque explicabo tempora nisi culpa."
+      ) %>
+
+      <%# Sans image, avec content slot %>
+      <%= render V1::Ui::CardComponent.new(
+        date:        "15th Jan 2024",
+        datetime:    "2024-01-15",
+        title:       "Card sans image avec footer custom",
+        description: "Un exemple de card sans image mais avec un slot de contenu personnalisé en bas."
+      ) do %>
+        <a href="#" class="btn btn-outline btn-sm">Lire l'article</a>
+      <% end %>
+
+    </div>
+  </section>
+
+  <%# ── 14. avatar_component ── %>
+  <section class="mb-14">
+    <div class="mb-4">
+      <h2 class="text-lg font-semibold text-slate-900">avatar_component</h2>
+      <p class="text-xs font-mono text-slate-400">src · initials · size · status · shape</p>
+    </div>
+
+    <%# Tailles %>
+    <div class="mb-3">
+      <p class="mb-2 text-xs font-medium text-slate-400 uppercase tracking-widest">Tailles</p>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex flex-wrap gap-4 items-end">
+        <%= render V1::Ui::AvatarComponent.new(initials: "CA", size: :xs) %>
+        <%= render V1::Ui::AvatarComponent.new(initials: "CA", size: :sm) %>
+        <%= render V1::Ui::AvatarComponent.new(initials: "CA", size: :md) %>
+        <%= render V1::Ui::AvatarComponent.new(initials: "CA", size: :lg) %>
+        <%= render V1::Ui::AvatarComponent.new(initials: "CA", size: :xl) %>
+      </div>
+    </div>
+
+    <%# Image vs initiales %>
+    <div class="mb-3">
+      <p class="mb-2 text-xs font-medium text-slate-400 uppercase tracking-widest">Image & initiales</p>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex flex-wrap gap-4 items-center">
+        <%= render V1::Ui::AvatarComponent.new(src: "https://i.pravatar.cc/150?u=carlos", initials: "CA", size: :lg) %>
+        <%= render V1::Ui::AvatarComponent.new(src: "https://i.pravatar.cc/150?u=alice",  initials: "AL", size: :lg) %>
+        <%= render V1::Ui::AvatarComponent.new(initials: "CA", size: :lg) %>
+        <%= render V1::Ui::AvatarComponent.new(initials: "AL", size: :lg) %>
+        <%= render V1::Ui::AvatarComponent.new(initials: "JD", size: :lg) %>
+        <%= render V1::Ui::AvatarComponent.new(initials: "MX", size: :lg) %>
+        <%= render V1::Ui::AvatarComponent.new(size: :lg) %>
+      </div>
+    </div>
+
+    <%# Statuts %>
+    <div class="mb-3">
+      <p class="mb-2 text-xs font-medium text-slate-400 uppercase tracking-widest">Statuts</p>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex flex-wrap gap-6 items-center">
+        <div class="flex flex-col items-center gap-2">
+          <%= render V1::Ui::AvatarComponent.new(initials: "CA", size: :md, status: :online) %>
+          <span class="text-xs text-slate-400">online</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <%= render V1::Ui::AvatarComponent.new(initials: "AL", size: :md, status: :away) %>
+          <span class="text-xs text-slate-400">away</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <%= render V1::Ui::AvatarComponent.new(initials: "JD", size: :md, status: :busy) %>
+          <span class="text-xs text-slate-400">busy</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <%= render V1::Ui::AvatarComponent.new(initials: "MX", size: :md, status: :offline) %>
+          <span class="text-xs text-slate-400">offline</span>
+        </div>
+      </div>
+    </div>
+
+    <%# Forme %>
+    <div class="mb-3">
+      <p class="mb-2 text-xs font-medium text-slate-400 uppercase tracking-widest">Formes</p>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex flex-wrap gap-6 items-center">
+        <div class="flex flex-col items-center gap-2">
+          <%= render V1::Ui::AvatarComponent.new(initials: "CA", size: :lg, shape: :circle) %>
+          <span class="text-xs text-slate-400">circle</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <%= render V1::Ui::AvatarComponent.new(initials: "CA", size: :lg, shape: :rounded) %>
+          <span class="text-xs text-slate-400">rounded</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <%= render V1::Ui::AvatarComponent.new(src: "https://i.pravatar.cc/150?u=carlos", initials: "CA", size: :lg, shape: :circle, status: :online) %>
+          <span class="text-xs text-slate-400">circle + status</span>
+        </div>
+        <div class="flex flex-col items-center gap-2">
+          <%= render V1::Ui::AvatarComponent.new(src: "https://i.pravatar.cc/150?u=alice", initials: "AL", size: :lg, shape: :rounded, status: :away) %>
+          <span class="text-xs text-slate-400">rounded + status</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%# ── 14. buttons ── %>
+  <section class="mb-14">
+    <div class="mb-4">
+      <h2 class="text-lg font-semibold text-slate-900">buttons</h2>
+      <p class="text-xs font-mono text-slate-400">.btn · .btn-{primary|secondary|outline|danger|ghost} · .btn-{sm|lg} · .btn-disabled · .btn-full</p>
+    </div>
+
+    <%# Variantes %>
+    <div class="mb-3">
+      <p class="mb-2 text-xs font-medium text-slate-400 uppercase tracking-widest">Variantes</p>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex flex-wrap gap-3 items-center">
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-secondary">Secondary</button>
+        <button class="btn btn-outline">Outline</button>
+        <button class="btn btn-danger">Danger</button>
+        <button class="btn btn-ghost">Ghost</button>
+      </div>
+    </div>
+
+    <%# Tailles %>
+    <div class="mb-3">
+      <p class="mb-2 text-xs font-medium text-slate-400 uppercase tracking-widest">Tailles</p>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex flex-wrap gap-3 items-center">
+        <button class="btn btn-primary btn-sm">Small</button>
+        <button class="btn btn-primary">Medium</button>
+        <button class="btn btn-primary btn-lg">Large</button>
+      </div>
+    </div>
+
+    <%# Avec icônes %>
+    <div class="mb-3">
+      <p class="mb-2 text-xs font-medium text-slate-400 uppercase tracking-widest">Avec icônes</p>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex flex-wrap gap-3 items-center">
+
+        <button class="btn btn-primary">
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+          Enregistrer
+        </button>
+
+        <button class="btn btn-outline">
+          Télécharger
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+        </button>
+
+        <button class="btn btn-danger">
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/>
+          </svg>
+          Supprimer
+        </button>
+
+        <%# Icône seule %>
+        <button class="btn btn-ghost px-2.5">
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+
+    <%# États %>
+    <div class="mb-3">
+      <p class="mb-2 text-xs font-medium text-slate-400 uppercase tracking-widest">États</p>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm flex flex-wrap gap-3 items-center">
+        <button class="btn btn-primary"           disabled>Disabled primary</button>
+        <button class="btn btn-secondary"         disabled>Disabled secondary</button>
+        <button class="btn btn-outline btn-disabled">Disabled outline (lien)</button>
+      </div>
+    </div>
+
+    <%# Liens + pleine largeur %>
+    <div class="mb-3">
+      <p class="mb-2 text-xs font-medium text-slate-400 uppercase tracking-widest">Liens & pleine largeur</p>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-3">
+        <div class="flex gap-3">
+          <a href="#" class="btn btn-primary">Lien primary</a>
+          <a href="#" class="btn btn-outline">Lien outline</a>
+        </div>
+        <button class="btn btn-primary btn-full">Pleine largeur primary</button>
+        <button class="btn btn-outline btn-full">Pleine largeur outline</button>
+      </div>
+    </div>
+  </section>
+
+  <%# ── 14. lightbox_component ── %>
+  <section class="mb-14">
+    <div class="mb-4">
+      <h2 class="text-lg font-semibold text-slate-900">lightbox_component</h2>
+      <p class="text-xs font-mono text-slate-400">src · alt · img_class — survol pour agrandir, clic pour ouvrir, Échap / ✕ pour fermer</p>
+    </div>
+    <div class="grid gap-5 sm:grid-cols-3">
+
+      <%= render V1::Ui::LightboxComponent.new(
+        src: "https://picsum.photos/seed/forest/800/600",
+        alt: "Forêt",
+        img_class: "h-48"
+      ) %>
+
+      <%= render V1::Ui::LightboxComponent.new(
+        src: "https://picsum.photos/seed/city/800/600",
+        alt: "Ville",
+        img_class: "h-48"
+      ) %>
+
+      <%= render V1::Ui::LightboxComponent.new(
+        src: "https://picsum.photos/seed/mountain/800/600",
+        alt: "Montagne",
+        img_class: "h-48"
+      ) %>
+
+    </div>
+
+    <%# Raw HTML usage example %>
+    <div class="mt-5 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">Usage HTML brut (sans composant)</p>
+      <div class="grid gap-5 sm:grid-cols-2">
+
+        <div data-controller="lightbox"
+             data-lightbox-url-value="https://picsum.photos/seed/ocean/800/600">
+          <div data-lightbox-target="container" class="lightbox-wrapper overflow-hidden rounded-xl">
+            <img data-lightbox-target="image"
+                 src="https://picsum.photos/seed/ocean/800/600"
+                 alt="Océan"
+                 class="w-full h-40 object-cover" />
+          </div>
+        </div>
+
+        <div data-controller="lightbox"
+             data-lightbox-url-value="https://picsum.photos/seed/desert/800/600">
+          <div data-lightbox-target="container" class="lightbox-wrapper overflow-hidden rounded-xl">
+            <img data-lightbox-target="image"
+                 src="https://picsum.photos/seed/desert/800/600"
+                 alt="Désert"
+                 class="w-full h-40 object-cover" />
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 </div>

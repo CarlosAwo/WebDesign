@@ -1,0 +1,15 @@
+<span class="relative inline-flex">
+  <span class="<%= wrap_class %>">
+    <% if @src.present? %>
+      <img src="<%= @src %>" alt="<%= @initials %>" class="h-full w-full object-cover" />
+    <% else %>
+      <span class="flex h-full w-full items-center justify-center <%= initials_palette %>">
+        <span class="<%= text_class %> font-semibold leading-none select-none"><%= @initials || "?" %></span>
+      </span>
+    <% end %>
+  </span>
+
+  <% if @status %>
+    <span class="absolute bottom-0 right-0 block <%= dot_class %> <%= status_color %> rounded-full ring-2 ring-white"></span>
+  <% end %>
+</span>

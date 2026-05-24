@@ -1,0 +1,29 @@
+<div class="overflow-hidden rounded-lg shadow-sm transition hover:shadow-lg">
+  <% if @image_src %>
+    <img src="<%= @image_src %>" alt="<%= @image_alt %>" class="h-56 w-full object-cover" />
+  <% end %>
+
+  <div class="bg-white p-4 sm:p-6">
+    <% if @date %>
+      <time datetime="<%= @datetime %>" class="block text-xs text-neutral-500"><%= @date %></time>
+    <% end %>
+
+    <% if @title %>
+      <% if @href %>
+        <a href="<%= @href %>" class="group">
+          <h3 class="mt-0.5 text-lg text-neutral-900 group-hover:text-primary-600 transition-colors"><%= @title %></h3>
+        </a>
+      <% else %>
+        <h3 class="mt-0.5 text-lg text-neutral-900"><%= @title %></h3>
+      <% end %>
+    <% end %>
+
+    <% if @description %>
+      <p class="mt-2 line-clamp-3 text-sm leading-relaxed text-neutral-500"><%= @description %></p>
+    <% end %>
+
+    <% if content? %>
+      <div class="mt-4"><%= content %></div>
+    <% end %>
+  </div>
+</div>

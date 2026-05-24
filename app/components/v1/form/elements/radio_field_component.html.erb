@@ -4,8 +4,7 @@
       <%= @form.radio_button @field_name, option_value,
             required: @required,
             checked:  @value.to_s == option_value.to_s,
-            class:    "h-4 w-4 border-neutral-300 text-primary-600
-                       focus:ring-primary-500 focus:ring-offset-0 cursor-pointer" %>
+            class:    "form-radio" %>
       <span class="text-sm text-neutral-700 group-hover:text-neutral-900"><%= label %></span>
     </label>
   <% end %>
