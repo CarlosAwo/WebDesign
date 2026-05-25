@@ -1,24 +1,9 @@
-# README
+modifie le active de slim-select la color
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+cree now un card component 
+cree un lightbox component
+mais c'est presque essentiellement du js lorsque je le bin a un htnl je dois lui fournir le div contenru de l'image en taget et l'image aussi en tyarget 
 
-Things you may want to cover:
+lorsdque je survole l'image o m'affiche l'icone pour agrandir et lorsque je clique sur cet icone ca cree une div qui prend tout le body comme un modal das ce div ca cree ine img avec la src de l'image taegt j'aurais un bouton pour fermer ce modal entre griffe
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+ajoute des exemple de comment utiliser ces element sur la v1 homepage

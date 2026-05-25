@@ -11,7 +11,10 @@ export default class extends Controller {
 
   addNewRecord(e) {
     e.preventDefault()
-    if (this.maxValue > 0 && this.activeRecords.length >= this.maxValue) return
+    if (this.maxValue > 0 && this.activeRecords.length >= this.maxValue) {
+      this.#syncAddButton()
+      return
+    }
     this.#addNewRecord()
     this.#syncAddButton()
   }
@@ -38,6 +41,6 @@ export default class extends Controller {
   #syncAddButton() {
     if (!this.hasAddButtonTarget) return
     const reached = this.maxValue > 0 && this.activeRecords.length >= this.maxValue
-    this.addButtonTarget.classList.toggle("hidden", reached)
+    this.addButtonTarget.classList.toggle("!hidden", reached)
   }
 }
